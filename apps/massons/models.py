@@ -1,22 +1,18 @@
 from django.db import models
 
+from apps.common.models import BaseModel
+from apps.common.choices import DegreeChoices
+
 
 # Create your models here.
-class Masson(models.Model):
+class Masson(BaseModel):
     name = models.CharField(max_length=100, unique=False, verbose_name="Nome")
-    grade = models.CharField(
+    degree = models.CharField(
         max_length=50,
         verbose_name="Grau",
-        choices=[
-            ("Aprendiz", "Aprendiz"),
-            ("Companheiro", "Companheiro"),
-            ("Mestre", "Mestre"),
-            ("Meste Instalado", "Meste Instalado"),
-        ],
+        choices=DegreeChoices.choices,
+        default=DegreeChoices.APPRENTICE,
     )
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
